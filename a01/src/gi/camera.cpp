@@ -32,9 +32,11 @@ Ray Camera::perspective_view_ray(uint32_t x, uint32_t y, uint32_t w, uint32_t h,
     // TODO ASSIGNMENT1
     // jitter the ray throughout the pixel (x, y) using pixel_sample
 
-    glm::vec2 pixel_jitter = pixel_sample;//*0.5f
+    glm::vec2 pixel_jitter = pixel_sample;
 
-    const glm::vec2 pixel = glm::vec2(x, y) + glm::vec2(.5f) + pixel_jitter;
+    //std::cout << pixel_sample[0] << " , " << pixel_sample[1] << std::endl;
+
+    const glm::vec2 pixel = glm::vec2(x, y) +  pixel_jitter;
     const glm::vec2 ndch = (pixel - glm::vec2(w * .5f, h * .5f)) / glm::vec2(h);
     const float z = -.5f / tanf(.5f * M_PI * fov / 180.f);
     return Ray(pos, eye_to_world * glm::normalize(glm::vec3(ndch.x, ndch.y, z)));
@@ -57,21 +59,16 @@ void Camera::apply_DOF(Ray& ray, const glm::vec2& lens_sample) const {
     // hint: use the coordinate system given via the tangent and bitangent to jitter the ray's origin
     // hint: the lens size is given in this->lens_radius and the focal distance in this->focal_depth
 
-    glm::vec3 jitter_dir_u = glm::normalize(tangent)  * p_on_lens[0] * this->lens_radius;
-    glm::vec3 jitter_dir_v = glm::normalize(bitangent)  * p_on_lens[1] * this->lens_radius;
-/*
-    std::cout<<" Jitter Vectors : " << jitter_dir_u[0] << " , " << jitter_dir_u[1] << " , " << jitter_dir_u[2] <<std::endl;
-    std::cout<< jitter_dir_v[0] << " , " << jitter_dir_v[1] << " , " << jitter_dir_v[2] <<std::endl;
-*/
+    glm::vec3 jitter_dir_u = glm::normalize(tangent)  * (p_on_lens[0])* this->lens_radius;
+    glm::vec3 jitter_dir_v = glm::normalize(bitangent)  * (p_on_lens[1])* this->lens_radius;
+
     glm::vec3 general_jitter = jitter_dir_u + jitter_dir_v;
 
-    float ft_x = this->focal_depth / view_dir.z;
+    /*float ft_x = this->focal_depth / view_dir.z;
     float ft_y = this->focal_depth / view_dir.z;
-    float ft_z = this->focal_depth / view_dir.z;
+    float ft_z = this->focal_depth / view_dir.z;*/
 
-    //glm::vec3 focal_point = glm::vec3(ray.dir[0]*ft_x, ray.dir[1]*ft_x, ray.dir[2]*ft_x) + ray.org;
-
-    glm::vec3 focal_point = ray.org + ray.dir*focal_depth/glm::dot(ray.dir, view_dir);
+    glm::vec3 focal_point = ray.org + glm::normalize(ray.dir)*focal_depth/glm::dot(glm::normalize(ray.dir), glm::normalize(view_dir)); //view_dir
 
     glm::vec3 old_org = ray.org;
 

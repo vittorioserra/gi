@@ -27,30 +27,27 @@ std::tuple<glm::vec3, Ray, float> AreaLight::sample_Li(const SurfaceInteraction&
     // hint: see surface.h for relevant members of the SurfaceInteraction class
     // hint: you may simply ignore the sample_pdf variable for now
 
-
-    glm::vec3 omega_i = -glm::normalize(light.P - hit.P);
+    glm::vec3 omega_i = glm::normalize(hit.P - light.P);
     glm::vec3 n = hit.N;
 
-    float dot_prod = glm::dot((-omega_i), n);
+    float dot_prod = -glm::dot((omega_i), n); //-omega_i
 
-    float area_light = mesh.surface_area();
+    if(dot_prod < 0.0f){
 
-    glm::vec3 k_e = power();//hit.albedo();
+        dot_prod = 0.0f;
 
+    }
+
+    float area_light = light.area;
+
+    glm::vec3 k_e = power();
     float r = glm::length(hit.P - light.P);
-
-    //float r = 1.0;
 
     glm::vec3 L_i = k_e * (area_light*dot_prod)/(r*r);
 
 
     const glm::vec3 Le = L_i;
     Ray shadow_ray = Ray(hit.P, -omega_i, r);
-    /*
-
-    Ray shadow_ray = Ray();
-
-    const glm::vec3 Le= light.Le();*/
 
     return { Le, shadow_ray, sample_pdf };
 }

@@ -138,7 +138,7 @@ public:
     inline void init(uint32_t N) {
         // TODO
         dist = 1.0/(float)N;
-        pos = 0.5;
+        pos = 0.0;
     }
 
     inline float next() {
@@ -196,18 +196,12 @@ public:
         int pos_x = pos_linear % n_pixel_line;
         int pos_y = pos_linear / n_pixel_line;
 
-        //std::cout<< n_pixel_line <<std::endl;
 
-        //std::cout<< pos_x << " " << pos_y << std::endl;
-
-        float value_1 = dist * RNG::uniform<float>()  + pos_x/(float)n_pixel_line ;//+ 0.5*dist;
-        float value_2 = dist * RNG::uniform<float>()  + pos_y/(float)n_pixel_line ;//+ 0.5*dist;
+        float value_1 = dist * RNG::uniform<float>()  + pos_x/(float)n_pixel_line ;
+        float value_2 = dist * RNG::uniform<float>()  + pos_y/(float)n_pixel_line ;
 
         pos_linear ++;
 
-        //std::cout << value_1 << " " << value_2 <<std::endl;
-
-        //std::cout<< dist<<std::endl;
 
         return glm::vec2(value_1, value_2);
     }
@@ -226,7 +220,7 @@ public:
     inline void init(uint32_t N) {
         // TODO ASSIGNMENT1
         // note: bases 2 and 3 are commonly used
-        dist = (float) N; //std::sqrt((float)N);
+        dist = (float) N;
         dist = std::sqrt(dist);
         n_pixel_line = (int)dist;
 
@@ -241,14 +235,9 @@ public:
         int pos_x = pos_linear % n_pixel_line;
         int pos_y = pos_linear / n_pixel_line;
 
-        //std::cout<< n_pixel_line <<std::endl;
 
-        //std::cout<< pos_x << " " << pos_y << std::endl;
-
-        float value_1 = halton(pos_linear, 2);//+ pos_x/(float)n_pixel_line + 0.5*dist;
-        float value_2 = halton(pos_linear, 3);//  + pos_y/(float)n_pixel_line + 0.5*dist;
-
-        //std::cout<<halton(pos_linear, 2) << " " << halton(pos_linear, 3) << std::endl;
+        float value_1 = halton(pos_linear, 2);
+        float value_2 = halton(pos_linear, 3);
 
         pos_linear ++;
 
@@ -269,7 +258,7 @@ public:
     inline void init(uint32_t N) {
         // TODO ASSIGNMENT1
         // note: use a random seed
-        dist = (float) N; //std::sqrt((float)N);
+        dist = (float) N;
         dist = std::sqrt(dist);
         n_pixel_line = (int)dist;
 
@@ -284,9 +273,7 @@ public:
     inline glm::vec2 next() {
         // TODO ASSIGNMENT1
         // note: see helper function hammersley() above
-        glm::vec2 sample = hammersley(pos_linear, n_pixel_tot,seed);//+ pos_x/(float)n_pixel_line + 0.5*dist;
-
-        //std::cout<<sample[0] << " " <<sample[1]<<std::endl;
+        glm::vec2 sample = hammersley(pos_linear, n_pixel_tot,seed);
 
         pos_linear = pos_linear + 1;
 
@@ -307,7 +294,7 @@ public:
     inline void init(uint32_t N) {
         // TODO ASSIGNMENT1
         // note: use two random seeds
-        dist = (float) N; //std::sqrt((float)N);
+        dist = (float) N;
         dist = std::sqrt(dist);
         n_pixel_line = (int)dist;
 
@@ -323,10 +310,7 @@ public:
     inline glm::vec2 next() {
         // TODO ASSIGNMENT1
         // note: see helper function sample02() above
-        glm::vec2 sample = sample02(pos_linear, seeds);//+ pos_x/(float)n_pixel_line + 0.5*dist;
-
-        std::cout<<sample[0] << " " <<sample[1]<<std::endl;
-
+        glm::vec2 sample = sample02(pos_linear, seeds);
 
         pos_linear = pos_linear + 1;
         return sample;
