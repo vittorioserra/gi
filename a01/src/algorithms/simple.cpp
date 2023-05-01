@@ -6,6 +6,7 @@
 #include "gi/light.h"
 #include "gi/ray.h"
 
+
 using namespace std;
 using namespace glm;
 
@@ -37,7 +38,9 @@ struct SimpleRenderer : public Algorithm {
         hammer_samp.init(samples);
         ld_samp.init(samples);
 
-        StratifiedSampler2D lens_sample = StratifiedSampler2D();
+
+        HaltonSampler2D lens_sample = HaltonSampler2D();
+        /*UniformSampler2D lens_sample = UniformSampler2D();*/
 
         lens_sample.init(samples);
 
@@ -50,7 +53,7 @@ struct SimpleRenderer : public Algorithm {
 
         for(int i = 0; i < samples; i++){
 
-            jitter[i] = strat_samp.next();
+            jitter[i] = halton_samp.next();//strat_samp.next();
             lens_dof[i] = lens_sample.next();//glm::vec2(0.5f, 0.5f);
 
             aa_ray[i] = cam.view_ray(x, y, w, h, jitter[i], lens_dof[i]);
@@ -59,10 +62,10 @@ struct SimpleRenderer : public Algorithm {
         vec3 L(0);
 
 
-        UniformSampler2D samp_source_s = UniformSampler2D();
-        UniformSampler2D samp_area_s = UniformSampler2D();
+        HaltonSampler2D samp_source_s = HaltonSampler2D();
+        HaltonSampler2D samp_area_s = HaltonSampler2D();
 
-        UniformSampler1D samp_light_source = UniformSampler1D();
+        StratifiedSampler1D samp_light_source = StratifiedSampler1D();
 
         samp_source_s.init(samples);
         samp_area_s.init(samples);

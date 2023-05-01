@@ -1,0 +1,56 @@
+Sampling techniques :
+
+Random
+       --> Arbitrary number of samples possible (does not have to be a oerfect sqrt of something)
+       --> Samples can concentrate only on one side
+       --> sample number easy to variate on the fly
+
+Stratified
+        -->Samples distributed more evenly
+        -->Number of samples has to be sqrt of something
+        -->problems for higher dimensions
+
+Halton
+        -->Pseudo random sequence, so same correlation applies to every pixel (in the the other two cases, more pronounced randomness, althou not "randomic" in a strict mathematical sense)
+        -->Bases should be : (Prime ^ different ^ small) --> limiting range of action, e.g. not independet for common prime factors. Keep bases small
+        --> lower computational cost, and looks "random enough"
+
+Hammerslay
+        --> Quote : " The Hammersley sequence is the same as the Halton sequence except in the first dimension where points are located equidistant from each other."
+        --> Quote : "The Hammersley sampling method is only available for low-dimensional problems n≤10. At higher dimensions, the performance of the sampling method has been shown to degrade."
+        --> lower computational cost, and looks "random enough",usable for monte-carlo integration
+
+        --> FURTHER READING : https://www.cse.cuhk.edu.hk/~ttwong/papers/udpoint/udpoint.pdf (Section 4 especially)
+
+Low Discrepancy
+        -->Tends to generate points at a 45-deg angle to the image rasterization patterns. This way less aliasing becomes visible
+        -->points falling close to one another could potentially be simplifies and used in multiples samples, as they are likely to offer a low spatial variation
+        -->lower computational time
+        -->dependant on coefficient choice
+
+
+========== Differences : 26 Samples
+
+Uniform vs Stratified --> edges smoother for stratified.Some weird "distortion" effect,which is actually more realistic for the stratified sampler (Stratified --> Handles and handles shadows of closer teapots more noticeable)
+
+Halton vs (Uniform v Stratified) --> edges look like as if they were "painted". Weird halo around objects against backgorund.
+
+========== Differences : 200 Samples
+
+Uniform vs Stratified --> edges smoother for stratified.Some weird "distortion" effect,which is actually more realistic for the stratified sampler (Stratified --> Handles and handles shadows of closer teapots more noticeable)
+
+Halton vs (Uniform v Stratified) --> edges look like as if they were "painted". Weird halo around objects against backgorund.
+
+>>> Basically same considerations, just better image quality, anti-aliasing and lens blurring.44
+
+========== Correlation
+
+Stratified performs optically better than pure uniform, as a minimal amount of randomness-constrainig is useful for sampling complex objects and wide lights/shadows. A pure random sampling just misses many spots necessary to create a good image.
+
+Halton, being much faster in the rendering process, actually intriduces a correlation between neughouring pixels, which are therefore all sampled in the same manner. The effect is noticeable in case of sharp borders with a light/shadow situation on different sides. They become "as if handpainted". Furthermore halos appear around objects. Image quality is negatively impacted.
+
+
+
+
+
+
