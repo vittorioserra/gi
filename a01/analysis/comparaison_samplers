@@ -1,7 +1,7 @@
 Sampling techniques :
 
 Random
-       --> Arbitrary number of samples possible (does not have to be a oerfect sqrt of something)
+       --> Arbitrary number of samples possible (does not have to be a perfect sqrt of something)
        --> Samples can concentrate only on one side
        --> sample number easy to variate on the fly
 
@@ -13,11 +13,12 @@ Stratified
 Halton
         -->Pseudo random sequence, so same correlation applies to every pixel (in the the other two cases, more pronounced randomness, althou not "randomic" in a strict mathematical sense)
         -->Bases should be : (Prime ^ different ^ small) --> limiting range of action, e.g. not independet for common prime factors. Keep bases small
-        --> lower computational cost, and looks "random enough"
+        -->lower computational cost, and looks "random enough"
 
 Hammerslay
-        --> Quote : " The Hammersley sequence is the same as the Halton sequence except in the first dimension where points are located equidistant from each other."
+        --> Quote : "The Hammersley sequence is the same as the Halton sequence except in the first dimension where points are located equidistant from each other."
         --> Quote : "The Hammersley sampling method is only available for low-dimensional problems n≤10. At higher dimensions, the performance of the sampling method has been shown to degrade."
+        --> https://idaes-pse.readthedocs.io/en/1.7.0/user_guide/modeling_extensions/surrogate/pysmo/pysmo_hammersley.html
         --> lower computational cost, and looks "random enough",usable for monte-carlo integration
 
         --> FURTHER READING : https://www.cse.cuhk.edu.hk/~ttwong/papers/udpoint/udpoint.pdf (Section 4 especially)
@@ -41,7 +42,7 @@ Uniform vs Stratified --> edges smoother for stratified.Some weird "distortion" 
 
 Halton vs (Uniform v Stratified) --> edges look like as if they were "painted". Weird halo around objects against backgorund.
 
->>> Basically same considerations, just better image quality, anti-aliasing and lens blurring.44
+>>> Basically same considerations, just better image quality, anti-aliasing and lens blurring.
 
 ========== Correlation
 

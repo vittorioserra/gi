@@ -40,7 +40,6 @@ struct SimpleRenderer : public Algorithm {
 
 
         HaltonSampler2D lens_sample = HaltonSampler2D();
-        /*UniformSampler2D lens_sample = UniformSampler2D();*/
 
         lens_sample.init(samples);
 
@@ -53,8 +52,8 @@ struct SimpleRenderer : public Algorithm {
 
         for(int i = 0; i < samples; i++){
 
-            jitter[i] = halton_samp.next();//strat_samp.next();
-            lens_dof[i] = lens_sample.next();//glm::vec2(0.5f, 0.5f);
+            jitter[i] = halton_samp.next();
+            lens_dof[i] = lens_sample.next();
 
             aa_ray[i] = cam.view_ray(x, y, w, h, jitter[i], lens_dof[i]);
 
@@ -87,7 +86,7 @@ struct SimpleRenderer : public Algorithm {
                 // const auto [light_ptr, ignore_me] = scene.sample_light_source(...);
                 // auto [Li, shadow_ray, ignore_me2] = light_ptr->sample_Li(...);
 
-                const auto [light_ptr, ignore_me] = scene.sample_light_source(samp_light_source.next());//samp_source_s.next()[0]);
+                const auto [light_ptr, ignore_me] = scene.sample_light_source(samp_light_source.next());
 
 
                 auto [Li, shadow_ray, ignore_me2] = light_ptr->sample_Li(hit, samp_area_s.next());
@@ -120,7 +119,6 @@ struct SimpleRenderer : public Algorithm {
 
             }
 
-                //L = hit.albedo();
 
 
         }
@@ -130,10 +128,6 @@ struct SimpleRenderer : public Algorithm {
                 fbo.add_sample(x, y, L);
 
         }
-
-            //                fbo.add_sample(x, y, L);
-
-            //--> it was wrong here !!!!, must be in the for loop
 
             }
         };

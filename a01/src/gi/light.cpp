@@ -30,7 +30,7 @@ std::tuple<glm::vec3, Ray, float> AreaLight::sample_Li(const SurfaceInteraction&
     glm::vec3 omega_i = glm::normalize(hit.P - light.P);
     glm::vec3 n = hit.N;
 
-    float dot_prod = -glm::dot((omega_i), n); //-omega_i
+    float dot_prod = -glm::dot((omega_i), n);
 
     if(dot_prod < 0.0f){
 

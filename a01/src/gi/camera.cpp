@@ -64,9 +64,6 @@ void Camera::apply_DOF(Ray& ray, const glm::vec2& lens_sample) const {
 
     glm::vec3 general_jitter = jitter_dir_u + jitter_dir_v;
 
-    /*float ft_x = this->focal_depth / view_dir.z;
-    float ft_y = this->focal_depth / view_dir.z;
-    float ft_z = this->focal_depth / view_dir.z;*/
 
     glm::vec3 focal_point = ray.org + glm::normalize(ray.dir)*focal_depth/glm::dot(glm::normalize(ray.dir), glm::normalize(view_dir)); //view_dir
 
